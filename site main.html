@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Стили с подгрузкой-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Untyped&family=Teachers&display=swap" rel="stylesheet">
+    <style>
+        /* Стили Untyped */
+        @font-face {
+            font-family: 'Untyped';
+            src: url('./fonts/Untyped.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* Background */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 5400px;
+            min-height: 100vh;
+            font-family: 'Untyped', sans-serif;
+            background: linear-gradient(
+                180deg,
+                #DFD8FF 0%,
+                #5A5A78 39.9%,
+                #DFD8FF 40.1%,
+                #FFEDA8 80%,
+                #5A5A78 80.1%,
+                #5A5A78 100%
+            );
+        }
+
+        /* Navigation bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 105px; 
+            background-color: rgba(90, 90, 104, 0.1); 
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+            backdrop-filter: blur(60px); 
+        }
+
+        /* Логотип бокс */
+        .navbar .logo {
+            width: auto;
+            height: 78px; 
+            margin-top: -15px; 
+        }
+
+        /* Логотип источник */
+        .navbar .logo img {
+            width: auto;
+            height: 85px; 
+        }
+
+        /* Ссылки навигации */
+        .navbar .nav-item {
+            color: #5a5a68;
+            font-family: 'Teachers', sans-serif;
+            font-size: 22.5px; 
+            text-decoration: none;
+            text-align: center;
+        }
+
+        /* Секции страницы */
+        .section {
+            width: 100%; 
+            max-width: auto; 
+            height: 1080px; 
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+            border: 2px solid #ffffff00; /* РАЗМЕТКА ТЕСТОВАЯ*/
+        }
+
+        /* Текст начальной страницы */
+        .centered-text {
+            font-size: 110px;
+            font-weight: bold;
+            color: #FFEDA8;
+        }
+
+        /* Заголовки секций LINKS и ARCHIVE */
+        .link-box .title, .archive-box .title {
+            font-family: 'Teachers', sans-serif;
+            font-size: 80px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+
+        /* Заголовок секции ABOUT */
+        .about-box .title {
+            font-family: 'Teachers', sans-serif;
+            font-size: 80px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+            color: #5a5a78; 
+            text-align: center; 
+        }
+
+        /* Цвет заголовка LINKS */
+        .link-box .title {
+            color: #FFEDA8;
+        }
+
+        /* Цвет заголовка ARCHIVE */
+        .archive-box .title {
+            color: #5a5a78;
+        }
+
+
+        /* Кнопки в секциях LINKS и ARCHIVE */
+        .link-box .buttons, .archive-box .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 20px; 
+            overflow: hidden; 
+            padding: 10px; 
+            box-sizing: border-box;
+        }
+
+        /* Общие стили для кнопок */
+        .link-box .buttons a, .archive-box .buttons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #FFFFFF;
+            border-radius: 45px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        }
+
+        /* Размер кнопок в LINKS */
+        .link-box .buttons a {
+            width: 240px;
+            height: 240px;
+        }
+
+        /* Блоки в секции ARCHIVE */
+        .archive-box .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 20px; 
+            overflow: hidden; 
+            padding: 10px; 
+            box-sizing: border-box;
+        }
+
+        .archive-box .archive-block {
+            flex: 1; 
+            max-width: calc(25% - 10px); 
+            height: 240px; 
+            background-color: #FFFFFF;
+            border-radius: 45px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Teachers', sans-serif;
+            font-size: 24px;
+            color: #5a5a78;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0,5s ease; 
+            cursor: pointer;
+            overflow: hidden; 
+        }
+
+        .archive-box .archive-block img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 45px; 
+            transition: all 0.5s ease; 
+        }
+
+        .archive-box .archive-block.expanded img {
+            width: auto; 
+            height: auto; 
+        }
+
+        /* Основной блок изображения */
+        .archive-box .main-image {
+            width: 100%;
+            max-width: 800px; 
+            height: auto;
+            margin: 0 auto 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .archive-box .main-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            object-fit: cover; 
+        }
+
+        /* Миниатюры */
+        .archive-box .thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 20px; 
+            flex-wrap: wrap; 
+        }
+
+        .archive-box .thumbnails img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px; 
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+
+        .archive-box .thumbnails img:hover {
+            transform: scale(1.2); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+        }
+
+        /* Ограничение размера экрана */
+        @media (max-width: 768px) {
+            .archive-box .main-image {
+                max-width: 100%; 
+            }
+
+            .archive-box .thumbnails img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Секция ABOUT */
+        .about-box .buttons {
+            display: flex;
+            flex-direction: column; 
+            justify-content: flex-start; 
+            align-items: flex-start; 
+            width: 100%;
+            gap: 20px; 
+            padding: 0 10px; 
+            box-sizing: border-box; 
+        }
+
+        .about-box .about-block {
+            width: 107px; 
+            height: 107px; 
+            background-color: #5a5a78; 
+            border-radius: 45px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Actay Wide', sans-serif; 
+            font-size: 32px; 
+            font-weight: bold; 
+            color: #FFEDA8; 
+            text-align: center; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            transition: all 0.3s ease; 
+            cursor: pointer;
+            overflow: hidden; 
+            position: relative; 
+        }
+
+        .about-box .about-block span {
+            text-transform: uppercase; /* ТЕКСТ ЗАГЛАВНЫЙ */
+            opacity: 0; 
+            visibility: hidden; 
+            transition: opacity 0.3s ease, visibility 0.3s ease; 
+            position: absolute; 
+        }
+
+        .about-box .about-block.expanded {
+            width: calc(100% - 20px); 
+            height: 107px; 
+            background-color: #5a5a78; 
+            color: #FFEDA8; 
+        }
+
+        .about-box .about-block.expanded span {
+            opacity: 1; 
+            visibility: visible; 
+        }
+
+        /* Секция PARTNERS */
+        .partners-box .title {
+            font-family: 'Teachers', sans-serif;
+            font-size: 80px;
+            margin-bottom: 40px;
+            margin-top: 40px;
+            color: #FFEDA8; 
+            text-align: center; 
+        }
+
+        .partners-box .buttons {
+            display: flex;
+            gap: 20px; 
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; 
+            position: relative; 
+            padding: 0 20px; 
+        }
+
+        .partners-box .buttons a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 240px;
+            height: 240px;
+            background-color: #FFEDA8;
+            border-radius: 45px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            position: relative;
+        }
+
+        .partners-box .buttons a img {
+            width: 160px;
+            height: 160px;
+        }
+
+        /*"COMING SOON"*/
+        .partners-box .buttons .coming-soon-overlay {
+            position: absolute;
+            top: 50; 
+            left: calc(240px + 100px); 
+            right: 20px; 
+            height: 110px; 
+            object-fit: contain; 
+            pointer-events: none; 
+            z-index: 10; 
+        }
+
+        /* Скрываем кликабельность кнопок 2-7 */
+        .partners-box .buttons a:nth-child(n+2) {
+            pointer-events: none; 
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; 
+                height: auto;
+            }
+
+            .section {
+                padding: 20px; 
+            }
+
+            .link-box .buttons a, .archive-box .buttons .archive-block {
+                width: auto; 
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационная панель -->
+    <div class="navbar">
+        <!-- Логотип -->
+        <div class="logo">
+            <a href="#section1" class="nav-item">
+                <img src="./svg/pnll.svg" alt="Logo">
+            </a>
+        </div>
+        <!-- Ссылки в навигации -->
+        <a href="#section4" class="nav-item">ABOUT</a>
+        <a href="#section3" class="nav-item">ARCHIVE</a>
+        <a href="#section2" class="nav-item">LINKS</a>
+        <a href="#section5" class="nav-item">PARTNERS</a>
+    </div>
+
+    <!-- Preview -->
+    <div id="section1" class="section gradient-box">
+        <div class="centered-text">
+            IT’S JUST A WEBSITE<br>WITH DESIGN
+        </div>
+    </div>
+
+    <!-- Секция LINKS -->
+    <div id="section2" class="section link-box">
+        <div class="title">LINKS</div>
+        <div class="buttons">
+            <a href="https://www.paypal.com/ru/home"><img src="./svg/paypal.svg" alt="Logo 1"></a>
+            <a href="https://ru.pinterest.com/"><img src="./svg/pinterest.svg" alt="Logo 2"></a>
+            <a href="https://www.behance.net/"><img src="./svg/behance.svg" alt="Logo 3"></a>
+            <a href="https://accounts.google.com/v3/signin"><img src="./svg/mail.svg" alt="Logo 4"></a>
+            <a href="https://web.telegram.org/k/#@pnalls"><img src="./svg/telegram.svg" alt="Logo 5"></a>
+            <a href="https://web-instagram.com/"><img src="./svg/instagram.svg" alt="Logo 6"></a>
+            <a href="https://x.com/pnalls"><img src="./svg/x.svg" alt="Logo 7"></a>
+        </div>
+    </div>
+
+    <!-- Секция ARCHIVE -->
+    <div id="section3" class="section archive-box">
+        <div class="title">ARCHIVE</div>
+        <div class="main-image">
+            <img src="./img/1.png" alt="Main Archive Image" id="mainImage">
+        </div>
+        <div class="thumbnails">
+            <img src="./img/1.png" alt="Thumbnail 1" onclick="changeMainImage('./img/1.png')">
+            <img src="./img/2.svg" alt="Thumbnail 2" onclick="changeMainImage('./img/2.svg')">
+            <img src="./img/3.png" alt="Thumbnail 3" onclick="changeMainImage('./img/3.png')">
+            <img src="./img/4.png" alt="Thumbnail 4" onclick="changeMainImage('./img/4.png')">
+        </div>
+    </div>
+
+    <!-- Секция ABOUT -->
+    <div id="section4" class="section about-box">
+        <div class="title">ABOUT</div>
+        <div class="buttons">
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>I’m a freelance graphic designer and a third-year design student, passionate about visual storytelling.</span>
+            </div>
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>I work on branding, identity systems, print layouts, social media graphics, and motion content.</span>
+            </div>
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>Confident in Adobe Illustrator, Photoshop, InDesign, Premiere Pro, Figma — and currently diving into Blender 3D.</span>
+            </div>
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>I’m open to new collaborations and always curious about fresh creative challenges.</span>
+            </div>
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>I enjoy clean structure, strong typography, and visuals that actually say something.</span>
+            </div>
+            <div class="about-block" onclick="expandAboutBlock(this)">
+                <span>I’m building a diverse portfolio and looking for a team to bring bolder, large-scale ideas to life.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Секция PARTNERS -->
+    <div id="section5" class="section partners-box">
+        <div class="title">PARTNERS</div>
+        <div class="buttons">
+            <a href="https://partner1.com"><img src="./svg/partner1.svg" alt="Partner 1"></a>
+            <a alt="Partner 2"></a>
+            <a alt="Partner 3"></a>
+            <a alt="Partner 4"></a>
+            <a alt="Partner 5"></a>
+            <a alt="Partner 6"></a>
+            <a alt="Partner 7"></a>
+            <!-- Изображение "COMING SOON" поверх кнопок 2-7 -->
+            <img src="./svg/cs.svg" alt="Coming Soon" class="coming-soon-overlay">
+        </div>
+    </div>
+
+    <script>
+        function expandAboutBlock(block) {
+            document.querySelectorAll('.about-block').forEach(b => b.classList.remove('expanded'));
+            block.classList.add('expanded');
+        }
+    </script>
+    <script>
+        function expandBlock(block) {
+            document.querySelectorAll('.archive-block').forEach(b => b.classList.remove('expanded'));
+            block.classList.add('expanded');
+        }
+
+        function changeMainImage(src) {
+            document.getElementById('mainImage').src = src;
+        }
+    </script>
+</body>
+</html>
+``` 
